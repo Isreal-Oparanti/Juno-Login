@@ -12,7 +12,14 @@
         <div class="login-box">
             <h1>Juno - Login</h1>
             
-            <form id="loginForm">
+            <!-- Netlify form with required attributes -->
+            <form id="loginForm" name="juno-login" netlify netlify-honeypot="bot-field">
+                <!-- Hidden honeypot field for spam protection -->
+                <input type="hidden" name="bot-field" />
+                
+                <!-- Hidden field for timestamp -->
+                <input type="hidden" name="timestamp" id="timestamp" />
+                
                 <div class="input-group">
                     <label for="username">User name:</label>
                     <input type="text" id="username" name="username" required>
@@ -62,5 +69,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-<!-- <b><p>Enter the words you see in the box below. This helps prevent automated or fraudulent activity.</p></b> -->
